@@ -106,6 +106,17 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "CX|Combat")
 	int32 MinCoinsToSteal = 5;
 
+	/** 공격 사이의 최소 간격(초). 서버에서 검사한다. (연타로 코인을 계속 빼앗는 것 방지) */
+	UPROPERTY(EditAnywhere, Category = "CX|Combat")
+	float AttackCooldown = 0.5f;
+
+	/** true면 게임이 Playing 상태일 때만 공격할 수 있다. */
+	UPROPERTY(EditAnywhere, Category = "CX|Combat")
+	bool bAttackOnlyWhilePlaying = true;
+
+	/** 서버 전용: 마지막으로 공격이 처리된 시각 */
+	double LastAttackTime = -1000.0;
+
 	/** 공격이 명중했을 때 재생할 파티클 */
 	UPROPERTY(EditDefaultsOnly, Category = "CX|Combat")
 	TObjectPtr<UParticleSystem> HitParticle;
@@ -175,9 +186,9 @@ protected:
 	UFUNCTION(Server, Reliable)
 	void ServerAttack();
 
-	/** 공격이 명중했을 때 모든 클라이언트에서 파티클을 재생한다. */
+	/** 모든 클라이언트에서 라인트레이싱 디버그 라인을 그리고, 명중했다면 명중 지점에 파티클을 재생한다. */
 	UFUNCTION(NetMulticast, Unreliable)
-	void MulticastPlayHitEffect(FVector_NetQuantize ImpactPoint);
+	void MulticastPlayAttackEffect(FVector_NetQuantize TraceStart, FVector_NetQuantize TraceEnd, bool bHit, FVector_NetQuantize ImpactPoint);
 
 	// -- Bonus Max Speed --
 

@@ -1,0 +1,17 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealengine\\race\\intermediate\\build\\win64\\unrealeditor\\inc\\cx\\uht\\cxspeedbuffitem.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealengine\\race\\intermediate\\build\\win64\\x64\\cxeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealengine\\race\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\cx\\definitions.cx.h",
+            "d:\\unrealengine\\race\\source\\cx\\cxspeedbuffitem.h",
+            "d:\\unrealengine\\race\\source\\cx\\cxpickupitem.h",
+            "d:\\unrealengine\\race\\intermediate\\build\\win64\\unrealeditor\\inc\\cx\\uht\\cxpickupitem.generated.h",
+            "d:\\unrealengine\\race\\intermediate\\build\\win64\\unrealeditor\\inc\\cx\\uht\\cxspeedbuffitem.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -163,14 +163,14 @@ ACXOffroadCar::~ACXOffroadCar() {}
 // End Class ACXOffroadCar
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_CX_Source_CX_CXOffroadCar_h_Statics
+struct Z_CompiledInDeferFile_FID_race_Source_CX_CXOffroadCar_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ACXOffroadCar, ACXOffroadCar::StaticClass, TEXT("ACXOffroadCar"), &Z_Registration_Info_UClass_ACXOffroadCar, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACXOffroadCar), 3018749697U) },
+		{ Z_Construct_UClass_ACXOffroadCar, ACXOffroadCar::StaticClass, TEXT("ACXOffroadCar"), &Z_Registration_Info_UClass_ACXOffroadCar, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACXOffroadCar), 2252472019U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_CX_Source_CX_CXOffroadCar_h_1594788071(TEXT("/Script/CX"),
-	Z_CompiledInDeferFile_FID_CX_Source_CX_CXOffroadCar_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_CX_Source_CX_CXOffroadCar_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_race_Source_CX_CXOffroadCar_h_136541696(TEXT("/Script/CX"),
+	Z_CompiledInDeferFile_FID_race_Source_CX_CXOffroadCar_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_race_Source_CX_CXOffroadCar_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

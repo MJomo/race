@@ -14,8 +14,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define CX_CXUI_generated_h
 
-#define FID_CX_Source_CX_CXUI_h_17_CALLBACK_WRAPPERS
-#define FID_CX_Source_CX_CXUI_h_17_INCLASS_NO_PURE_DECLS \
+#define FID_race_Source_CX_CXUI_h_17_CALLBACK_WRAPPERS
+#define FID_race_Source_CX_CXUI_h_17_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCXUI(); \
 	friend struct Z_Construct_UClass_UCXUI_Statics; \
@@ -24,7 +24,7 @@ public: \
 	DECLARE_SERIALIZER(UCXUI)
 
 
-#define FID_CX_Source_CX_CXUI_h_17_ENHANCED_CONSTRUCTORS \
+#define FID_race_Source_CX_CXUI_h_17_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UCXUI(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 private: \
@@ -38,13 +38,13 @@ public: \
 	NO_API virtual ~UCXUI();
 
 
-#define FID_CX_Source_CX_CXUI_h_14_PROLOG
-#define FID_CX_Source_CX_CXUI_h_17_GENERATED_BODY \
+#define FID_race_Source_CX_CXUI_h_14_PROLOG
+#define FID_race_Source_CX_CXUI_h_17_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_CX_Source_CX_CXUI_h_17_CALLBACK_WRAPPERS \
-	FID_CX_Source_CX_CXUI_h_17_INCLASS_NO_PURE_DECLS \
-	FID_CX_Source_CX_CXUI_h_17_ENHANCED_CONSTRUCTORS \
+	FID_race_Source_CX_CXUI_h_17_CALLBACK_WRAPPERS \
+	FID_race_Source_CX_CXUI_h_17_INCLASS_NO_PURE_DECLS \
+	FID_race_Source_CX_CXUI_h_17_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -52,7 +52,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> CX_API UClass* StaticClass<class UCXUI>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_CX_Source_CX_CXUI_h
+#define CURRENT_FILE_ID FID_race_Source_CX_CXUI_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

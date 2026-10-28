@@ -16,6 +16,104 @@ UMG_API UClass* Z_Construct_UClass_UUserWidget();
 UPackage* Z_Construct_UPackage__Script_CX();
 // End Cross Module References
 
+// Begin Class UCXUI Function OnBonusMaxSpeedUpdate
+struct CXUI_eventOnBonusMaxSpeedUpdate_Parms
+{
+	float NewBonusMaxSpeed;
+};
+static const FName NAME_UCXUI_OnBonusMaxSpeedUpdate = FName(TEXT("OnBonusMaxSpeedUpdate"));
+void UCXUI::OnBonusMaxSpeedUpdate(float NewBonusMaxSpeed)
+{
+	CXUI_eventOnBonusMaxSpeedUpdate_Parms Parms;
+	Parms.NewBonusMaxSpeed=NewBonusMaxSpeed;
+	UFunction* Func = FindFunctionChecked(NAME_UCXUI_OnBonusMaxSpeedUpdate);
+	ProcessEvent(Func,&Parms);
+}
+struct Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Vehicle" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** Implemented in Blueprint to display the new bonus max speed amount */" },
+#endif
+		{ "ModuleRelativePath", "CXUI.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Implemented in Blueprint to display the new bonus max speed amount" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_NewBonusMaxSpeed;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::NewProp_NewBonusMaxSpeed = { "NewBonusMaxSpeed", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CXUI_eventOnBonusMaxSpeedUpdate_Parms, NewBonusMaxSpeed), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::NewProp_NewBonusMaxSpeed,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCXUI, nullptr, "OnBonusMaxSpeedUpdate", nullptr, nullptr, Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::PropPointers), sizeof(CXUI_eventOnBonusMaxSpeedUpdate_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08080800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::Function_MetaDataParams) };
+static_assert(sizeof(CXUI_eventOnBonusMaxSpeedUpdate_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+// End Class UCXUI Function OnBonusMaxSpeedUpdate
+
+// Begin Class UCXUI Function OnCoinsUpdate
+struct CXUI_eventOnCoinsUpdate_Parms
+{
+	int32 NewCoins;
+};
+static const FName NAME_UCXUI_OnCoinsUpdate = FName(TEXT("OnCoinsUpdate"));
+void UCXUI::OnCoinsUpdate(int32 NewCoins)
+{
+	CXUI_eventOnCoinsUpdate_Parms Parms;
+	Parms.NewCoins=NewCoins;
+	UFunction* Func = FindFunctionChecked(NAME_UCXUI_OnCoinsUpdate);
+	ProcessEvent(Func,&Parms);
+}
+struct Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Vehicle" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** Implemented in Blueprint to display the new coin amount */" },
+#endif
+		{ "ModuleRelativePath", "CXUI.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Implemented in Blueprint to display the new coin amount" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_NewCoins;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::NewProp_NewCoins = { "NewCoins", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CXUI_eventOnCoinsUpdate_Parms, NewCoins), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::NewProp_NewCoins,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCXUI, nullptr, "OnCoinsUpdate", nullptr, nullptr, Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::PropPointers), sizeof(CXUI_eventOnCoinsUpdate_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08080800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::Function_MetaDataParams) };
+static_assert(sizeof(CXUI_eventOnCoinsUpdate_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCXUI_OnCoinsUpdate()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCXUI_OnCoinsUpdate_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+// End Class UCXUI Function OnCoinsUpdate
+
 // Begin Class UCXUI Function OnGearUpdate
 struct CXUI_eventOnGearUpdate_Parms
 {
@@ -128,12 +226,12 @@ struct Z_Construct_UClass_UCXUI_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "/**\n *  Simple Vehicle HUD class\n *  Displays the current speed and gear.\n *  Widget setup is handled in a Blueprint subclass.\n */" },
+		{ "Comment", "/**\n *  Simple Vehicle HUD class\n *  Displays the current speed, gear, coins and bonus max speed.\n *  Widget setup is handled in a Blueprint subclass.\n */" },
 #endif
 		{ "IncludePath", "CXUI.h" },
 		{ "ModuleRelativePath", "CXUI.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Simple Vehicle HUD class\nDisplays the current speed and gear.\nWidget setup is handled in a Blueprint subclass." },
+		{ "ToolTip", "Simple Vehicle HUD class\nDisplays the current speed, gear, coins and bonus max speed.\nWidget setup is handled in a Blueprint subclass." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bIsMPH_MetaData[] = {
@@ -152,6 +250,8 @@ struct Z_Construct_UClass_UCXUI_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_UCXUI_OnBonusMaxSpeedUpdate, "OnBonusMaxSpeedUpdate" }, // 3160218088
+		{ &Z_Construct_UFunction_UCXUI_OnCoinsUpdate, "OnCoinsUpdate" }, // 605131917
 		{ &Z_Construct_UFunction_UCXUI_OnGearUpdate, "OnGearUpdate" }, // 1950912108
 		{ &Z_Construct_UFunction_UCXUI_OnSpeedUpdate, "OnSpeedUpdate" }, // 2993676106
 	};
@@ -208,14 +308,14 @@ UCXUI::~UCXUI() {}
 // End Class UCXUI
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_CX_Source_CX_CXUI_h_Statics
+struct Z_CompiledInDeferFile_FID_race_Source_CX_CXUI_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UCXUI, UCXUI::StaticClass, TEXT("UCXUI"), &Z_Registration_Info_UClass_UCXUI, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCXUI), 457261969U) },
+		{ Z_Construct_UClass_UCXUI, UCXUI::StaticClass, TEXT("UCXUI"), &Z_Registration_Info_UClass_UCXUI, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCXUI), 2183425253U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_CX_Source_CX_CXUI_h_3862093193(TEXT("/Script/CX"),
-	Z_CompiledInDeferFile_FID_CX_Source_CX_CXUI_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_CX_Source_CX_CXUI_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_race_Source_CX_CXUI_h_1392771527(TEXT("/Script/CX"),
+	Z_CompiledInDeferFile_FID_race_Source_CX_CXUI_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_race_Source_CX_CXUI_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

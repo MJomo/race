@@ -82,14 +82,14 @@ UCXSportsWheelFront::~UCXSportsWheelFront() {}
 // End Class UCXSportsWheelFront
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_CX_Source_CX_CXSportsWheelFront_h_Statics
+struct Z_CompiledInDeferFile_FID_race_Source_CX_CXSportsWheelFront_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
 		{ Z_Construct_UClass_UCXSportsWheelFront, UCXSportsWheelFront::StaticClass, TEXT("UCXSportsWheelFront"), &Z_Registration_Info_UClass_UCXSportsWheelFront, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCXSportsWheelFront), 586879017U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_CX_Source_CX_CXSportsWheelFront_h_2356890273(TEXT("/Script/CX"),
-	Z_CompiledInDeferFile_FID_CX_Source_CX_CXSportsWheelFront_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_CX_Source_CX_CXSportsWheelFront_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_race_Source_CX_CXSportsWheelFront_h_2356890273(TEXT("/Script/CX"),
+	Z_CompiledInDeferFile_FID_race_Source_CX_CXSportsWheelFront_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_race_Source_CX_CXSportsWheelFront_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

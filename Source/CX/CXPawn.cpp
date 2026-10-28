@@ -4,6 +4,7 @@
 #include "CXWheelFront.h"
 #include "CXWheelRear.h"
 #include "CXPlayerState.h"
+#include "CXGameState.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/DamageType.h"
@@ -14,6 +15,7 @@
 #include "ChaosWheeledVehicleMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
+#include "Particles/ParticleSystem.h"
 
 #define LOCTEXT_NAMESPACE "VehiclePawn"
 
@@ -105,6 +107,10 @@ void ACXPawn::BeginPlay()
 
 	// 아이템에 의한 보너스가 적용되기 전의 기본값을 캐시
 	BaseEngineMaxRPM = ChaosVehicleMovement->EngineSetup.MaxRPM;
+
+	// PossessedBy / OnRep_PlayerState가 BeginPlay보다 먼저 불린 경우 BaseEngineMaxRPM이 비어 있어
+	// 보너스가 적용되지 못했을 수 있으므로, 캐시 직후 한 번 더 반영한다.
+	BindBonusMaxSpeedDelegate();
 }
 
 void ACXPawn::Tick(float Delta)
@@ -274,10 +280,29 @@ void ACXPawn::AttackPressed(const FInputActionValue& Value)
 
 void ACXPawn::ServerAttack_Implementation()
 {
-	if (IsValid(GetWorld()) == false)
+	UWorld* World = GetWorld();
+	if (IsValid(World) == false)
 	{
 		return;
 	}
+
+	// 게임이 진행 중일 때만 공격 가능 (대기/종료 중 코인 이동 방지)
+	if (bAttackOnlyWhilePlaying)
+	{
+		const ACXGameState* CXGameState = World->GetGameState<ACXGameState>();
+		if (IsValid(CXGameState) == false || CXGameState->GetGameStatus() != ECXGameStatus::Playing)
+		{
+			return;
+		}
+	}
+
+	// 서버에서 쿨다운 검사
+	const double Now = World->GetTimeSeconds();
+	if (Now - LastAttackTime < AttackCooldown)
+	{
+		return;
+	}
+	LastAttackTime = Now;
 
 	// 차량 앞 범퍼 중앙에서 전방으로 라인트레이싱
 	const FVector Start = GetActorLocation() + GetActorForwardVector() * AttackTraceStartOffset;
@@ -289,32 +314,30 @@ void ACXPawn::ServerAttack_Implementation()
 	FCollisionQueryParams QueryParams(SCENE_QUERY_STAT(VehicleAttackTrace), false, this);
 
 	FHitResult HitResult;
-	const bool bHit = GetWorld()->LineTraceSingleByObjectType(HitResult, Start, End, ObjectQueryParams, QueryParams);
+	const bool bHit = World->LineTraceSingleByObjectType(HitResult, Start, End, ObjectQueryParams, QueryParams);
 
-	// 라인트레이싱 결과를 디버그 라인으로 표시
-	DrawDebugLine(GetWorld(), Start, End, bHit ? FColor::Red : FColor::Green, false, 1.0f, 0, 3.0f);
+	ACXPawn* HitVehicle = bHit ? Cast<ACXPawn>(HitResult.GetActor()) : nullptr;
+	const bool bHitVehicle = IsValid(HitVehicle) && HitVehicle != this;
 
-	if (bHit == false)
-	{
-		return;
-	}
+	// 디버그 라인(+ 명중 시 파티클)을 서버와 모든 클라이언트에서 보이도록 멀티캐스트
+	MulticastPlayAttackEffect(Start, End, bHitVehicle, bHitVehicle ? FVector(HitResult.ImpactPoint) : End);
 
-	ACXPawn* HitVehicle = Cast<ACXPawn>(HitResult.GetActor());
-	if (IsValid(HitVehicle) == false || HitVehicle == this)
+	if (bHitVehicle == false)
 	{
 		return;
 	}
 
 	// 상대 차량에게 데미지 적용 (실제 코인 이전 로직은 TakeDamage에서 처리)
 	UGameplayStatics::ApplyDamage(HitVehicle, AttackDamage, GetController(), this, UDamageType::StaticClass());
-
-	// 닿은 차량에서 모든 클라이언트가 파티클을 볼 수 있도록 멀티캐스트
-	HitVehicle->MulticastPlayHitEffect(HitResult.ImpactPoint);
 }
 
-void ACXPawn::MulticastPlayHitEffect_Implementation(FVector_NetQuantize ImpactPoint)
+void ACXPawn::MulticastPlayAttackEffect_Implementation(FVector_NetQuantize TraceStart, FVector_NetQuantize TraceEnd, bool bHit, FVector_NetQuantize ImpactPoint)
 {
-	if (HitParticle)
+	// DrawDebugLine을 이용해 라인트레이싱을 표시 (명중: 빨강 / 빗나감: 초록)
+	DrawDebugLine(GetWorld(), FVector(TraceStart), FVector(TraceEnd), bHit ? FColor::Red : FColor::Green, false, 1.0f, 0, 3.0f);
+
+	// 닿은 차량에는 파티클 재생
+	if (bHit && HitParticle)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, FVector(ImpactPoint));
 	}
@@ -338,7 +361,7 @@ float ACXPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, A
 	}
 
 	ACXPawn* AttackerPawn = Cast<ACXPawn>(DamageCauser);
-	if (IsValid(AttackerPawn) == false)
+	if (IsValid(AttackerPawn) == false || AttackerPawn == this)
 	{
 		return ActualDamage;
 	}

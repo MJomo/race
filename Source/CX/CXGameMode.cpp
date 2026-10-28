@@ -64,6 +64,18 @@ bool ACXGameMode::IsPlayerStartAvailable(const APlayerStart* PlayerStart) const
 	return !bVehicleExists;
 }
 
+void ACXGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// 게임 시작 시 상태를 Waiting으로 설정한다. (카운트다운은 첫 플레이어 접속 시 시작)
+	if (ACXGameState* CXGameState = GetCXGameState())
+	{
+		CXGameState->SetGameStatus(ECXGameStatus::Waiting);
+		CXGameState->SetRemainingTime(WaitingDuration);
+	}
+}
+
 void ACXGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);

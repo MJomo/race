@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "CXGameState.h"
 #include "CXPlayerController.generated.h"
 
 class UInputMappingContext;
@@ -47,6 +48,7 @@ protected:
 	TSubclassOf<UCXUI> VehicleUIClass;
 
 	/** Pointer to the UI widget */
+	UPROPERTY()
 	TObjectPtr<UCXUI> VehicleUI;
 
 	/** Type of the chat widget to spawn */
@@ -72,7 +74,7 @@ protected:
 
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:
 
@@ -117,4 +119,21 @@ protected:
 	void BindPlayerStateDelegates();
 
 	// End Coins / BonusMaxSpeed HUD binding
+
+	// Begin Match status HUD binding
+protected:
+
+	/** GameState가 준비되면(클라이언트에서는 복제된 이후) 델리게이트를 한 번만 구독한다. */
+	void TryBindGameState();
+
+	UFUNCTION()
+	void HandleGameStatusChanged(ECXGameStatus NewStatus);
+
+	UFUNCTION()
+	void HandleRemainingTimeChanged(int32 NewRemainingTime);
+
+	/** GameState 델리게이트 구독이 끝났는지 여부 */
+	bool bGameStateBound = false;
+
+	// End Match status HUD binding
 };

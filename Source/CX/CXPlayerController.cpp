@@ -12,6 +12,12 @@
 #include "ChaosWheeledVehicleMovementComponent.h"
 #include "Net/UnrealNetwork.h"
 
+namespace
+{
+	/** 채팅 메세지 최대 길이 (서버에서 잘라낸다) */
+	constexpr int32 MaxChatMessageLength = 200;
+}
+
 void ACXPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -53,6 +59,9 @@ void ACXPlayerController::BeginPlay()
 
 	// 서버(리슨 서버 호스트)라면 OnRep_PlayerState가 호출되지 않으므로 여기서도 바인딩 시도
 	BindPlayerStateDelegates();
+
+	// GameState가 이미 있으면(리슨 서버 호스트 등) 바로 구독
+	TryBindGameState();
 }
 
 void ACXPlayerController::SetupInputComponent()
@@ -90,18 +99,11 @@ void ACXPlayerController::Tick(float Delta)
 		VehicleUI->UpdateGear(VehiclePawn->GetChaosVehicleMovement()->GetCurrentGear());
 	}
 
-	if (IsValid(GameStatusUI) && IsValid(GetWorld()))
+	// GameState는 클라이언트에 늦게 복제될 수 있으므로, 구독이 끝날 때까지만 매 프레임 시도한다.
+	// (이후에는 GameState의 델리게이트로만 UI를 갱신한다.)
+	if (bGameStateBound == false && IsLocalController())
 	{
-		if (ACXGameState* CXGameState = GetWorld()->GetGameState<ACXGameState>())
-		{
-			GameStatusUI->UpdateGameStatus(CXGameState->GetGameStatus());
-			GameStatusUI->UpdateRemainingTime(CXGameState->GetRemainingTime());
-
-			if (CXGameState->GetGameStatus() == ECXGameStatus::Finished)
-			{
-				GameStatusUI->ShowResult(CXGameState->IsLocalPlayerWinner());
-			}
-		}
+		TryBindGameState();
 	}
 }
 
@@ -169,6 +171,13 @@ void ACXPlayerController::SendChatMessage(const FString& Message)
 
 void ACXPlayerController::ServerSendChatMessage_Implementation(const FString& Message)
 {
+	// 서버에서 공백 제거 및 길이 제한 (클라이언트 입력을 신뢰하지 않는다)
+	const FString TrimmedMessage = Message.TrimStartAndEnd().Left(MaxChatMessageLength);
+	if (TrimmedMessage.IsEmpty())
+	{
+		return;
+	}
+
 	const FString SenderName = IsValid(PlayerState) ? PlayerState->GetPlayerName() : TEXT("Unknown");
 
 	// 접속해 있는 모든 플레이어 컨트롤러에게 메세지를 전달해 채팅을 동기화한다.
@@ -176,7 +185,7 @@ void ACXPlayerController::ServerSendChatMessage_Implementation(const FString& Me
 	{
 		if (ACXPlayerController* OtherController = Cast<ACXPlayerController>(It->Get()))
 		{
-			OtherController->ClientReceiveChatMessage(SenderName, Message);
+			OtherController->ClientReceiveChatMessage(SenderName, TrimmedMessage);
 		}
 	}
 }
@@ -186,5 +195,55 @@ void ACXPlayerController::ClientReceiveChatMessage_Implementation(const FString&
 	if (IsValid(ChatWidget))
 	{
 		ChatWidget->AppendChatMessage(SenderName, Message);
+	}
+}
+
+void ACXPlayerController::TryBindGameState()
+{
+	if (IsValid(GameStatusUI) == false || IsValid(GetWorld()) == false)
+	{
+		return;
+	}
+
+	ACXGameState* CXGameState = GetWorld()->GetGameState<ACXGameState>();
+	if (IsValid(CXGameState) == false)
+	{
+		return;
+	}
+
+	CXGameState->OnGameStatusChanged.AddUniqueDynamic(this, &ACXPlayerController::HandleGameStatusChanged);
+	CXGameState->OnRemainingTimeChanged.AddUniqueDynamic(this, &ACXPlayerController::HandleRemainingTimeChanged);
+	bGameStateBound = true;
+
+	// 구독 시점의 현재 값을 즉시 UI에 반영
+	HandleGameStatusChanged(CXGameState->GetGameStatus());
+	HandleRemainingTimeChanged(CXGameState->GetRemainingTime());
+}
+
+void ACXPlayerController::HandleGameStatusChanged(ECXGameStatus NewStatus)
+{
+	if (IsValid(GameStatusUI) == false)
+	{
+		return;
+	}
+
+	GameStatusUI->UpdateGameStatus(NewStatus);
+
+	// 승패 결과는 Finished로 바뀌는 시점에 한 번만 표시한다.
+	// (서버는 우승자 목록을 먼저 설정한 뒤 상태를 바꾸고, 클라이언트는 같은 번들의 값이 모두 적용된 뒤 OnRep이 호출된다.)
+	if (NewStatus == ECXGameStatus::Finished)
+	{
+		if (const ACXGameState* CXGameState = GetWorld()->GetGameState<ACXGameState>())
+		{
+			GameStatusUI->ShowResult(CXGameState->IsLocalPlayerWinner());
+		}
+	}
+}
+
+void ACXPlayerController::HandleRemainingTimeChanged(int32 NewRemainingTime)
+{
+	if (IsValid(GameStatusUI))
+	{
+		GameStatusUI->UpdateRemainingTime(NewRemainingTime);
 	}
 }

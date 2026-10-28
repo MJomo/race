@@ -43,9 +43,31 @@ struct Z_Construct_UClass_ACXGameMode_Statics
 		{ "Category", "CXGameMode" },
 		{ "ModuleRelativePath", "CXGameMode.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WaitingDuration_MetaData[] = {
+		{ "Category", "CX|Match" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** \xeb\x8c\x80\xea\xb8\xb0(Waiting) \xeb\x8b\xa8\xea\xb3\x84 \xec\xa7\x80\xec\x86\x8d \xec\x8b\x9c\xea\xb0\x84(\xec\xb4\x88) */" },
+#endif
+		{ "ModuleRelativePath", "CXGameMode.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "\xeb\x8c\x80\xea\xb8\xb0(Waiting) \xeb\x8b\xa8\xea\xb3\x84 \xec\xa7\x80\xec\x86\x8d \xec\x8b\x9c\xea\xb0\x84(\xec\xb4\x88)" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlayingDuration_MetaData[] = {
+		{ "Category", "CX|Match" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** \xec\xa7\x84\xed\x96\x89(Playing) \xeb\x8b\xa8\xea\xb3\x84 \xec\xa7\x80\xec\x86\x8d \xec\x8b\x9c\xea\xb0\x84(\xec\xb4\x88) */" },
+#endif
+		{ "ModuleRelativePath", "CXGameMode.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "\xec\xa7\x84\xed\x96\x89(Playing) \xeb\x8b\xa8\xea\xb3\x84 \xec\xa7\x80\xec\x86\x8d \xec\x8b\x9c\xea\xb0\x84(\xec\xb4\x88)" },
+#endif
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStructPropertyParams NewProp_VehicleSpawnCheckHalfExtent;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_VehicleSpawnCheckOffset;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_WaitingDuration;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_PlayingDuration;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -55,9 +77,13 @@ struct Z_Construct_UClass_ACXGameMode_Statics
 };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACXGameMode_Statics::NewProp_VehicleSpawnCheckHalfExtent = { "VehicleSpawnCheckHalfExtent", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACXGameMode, VehicleSpawnCheckHalfExtent), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_VehicleSpawnCheckHalfExtent_MetaData), NewProp_VehicleSpawnCheckHalfExtent_MetaData) };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACXGameMode_Statics::NewProp_VehicleSpawnCheckOffset = { "VehicleSpawnCheckOffset", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACXGameMode, VehicleSpawnCheckOffset), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_VehicleSpawnCheckOffset_MetaData), NewProp_VehicleSpawnCheckOffset_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_ACXGameMode_Statics::NewProp_WaitingDuration = { "WaitingDuration", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACXGameMode, WaitingDuration), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WaitingDuration_MetaData), NewProp_WaitingDuration_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_ACXGameMode_Statics::NewProp_PlayingDuration = { "PlayingDuration", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ACXGameMode, PlayingDuration), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlayingDuration_MetaData), NewProp_PlayingDuration_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ACXGameMode_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACXGameMode_Statics::NewProp_VehicleSpawnCheckHalfExtent,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACXGameMode_Statics::NewProp_VehicleSpawnCheckOffset,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACXGameMode_Statics::NewProp_WaitingDuration,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACXGameMode_Statics::NewProp_PlayingDuration,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ACXGameMode_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_ACXGameMode_Statics::DependentSingletons[])() = {
@@ -97,14 +123,14 @@ ACXGameMode::~ACXGameMode() {}
 // End Class ACXGameMode
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_CX_Source_CX_CXGameMode_h_Statics
+struct Z_CompiledInDeferFile_FID_race_Source_CX_CXGameMode_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ACXGameMode, ACXGameMode::StaticClass, TEXT("ACXGameMode"), &Z_Registration_Info_UClass_ACXGameMode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACXGameMode), 913587634U) },
+		{ Z_Construct_UClass_ACXGameMode, ACXGameMode::StaticClass, TEXT("ACXGameMode"), &Z_Registration_Info_UClass_ACXGameMode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACXGameMode), 112991849U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_CX_Source_CX_CXGameMode_h_3856112286(TEXT("/Script/CX"),
-	Z_CompiledInDeferFile_FID_CX_Source_CX_CXGameMode_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_CX_Source_CX_CXGameMode_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_race_Source_CX_CXGameMode_h_2947065551(TEXT("/Script/CX"),
+	Z_CompiledInDeferFile_FID_race_Source_CX_CXGameMode_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_race_Source_CX_CXGameMode_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

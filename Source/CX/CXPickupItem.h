@@ -30,6 +30,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	/** 아이템 메쉬 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CX|Item", meta = (AllowPrivateAccess = "true"))
@@ -53,7 +54,10 @@ protected:
 	/** 실제 보상 지급 로직. 서브클래스(Coin / SpeedBuff)에서 구현한다. */
 	virtual void GrantReward(ACXPlayerState* PlayerState) PURE_VIRTUAL(ACXPickupItem::GrantReward, );
 
-	/** 모든 클라이언트에서 파괴 이펙트를 재생한다. */
-	UFUNCTION(NetMulticast, Unreliable)
-	void MulticastPlayPickupEffect();
+	/** true면 게임이 Playing 상태일 때만 아이템을 획득할 수 있다. */
+	UPROPERTY(EditAnywhere, Category = "CX|Item")
+	bool bOnlyGrantWhilePlaying = true;
+
+	/** 서버 전용: 이미 획득 처리된 아이템인지 (한 프레임에 여러 컴포넌트가 오버랩돼도 중복 지급되지 않도록) */
+	bool bConsumed = false;
 };

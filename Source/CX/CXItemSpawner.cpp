@@ -18,8 +18,10 @@ void ACXItemSpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// 스폰 로직은 서버에서만 수행
-	if (HasAuthority())
+	// 스폰 로직은 서버에서만 수행.
+	// 주의: 레벨에 배치된 bReplicates=false 액터는 클라이언트에서도 HasAuthority()가 true이므로
+	// HasAuthority() 대신 NetMode로 클라이언트를 제외한다.
+	if (GetNetMode() != NM_Client)
 	{
 		SpawnItem();
 	}
@@ -47,6 +49,12 @@ void ACXItemSpawner::SpawnItem()
 
 void ACXItemSpawner::OnItemDestroyed(AActor* DestroyedActor)
 {
+	// 월드 정리(레벨 이동/게임 종료) 중에는 리스폰하지 않는다.
+	if (IsValid(GetWorld()) == false || GetWorld()->bIsTearingDown)
+	{
+		return;
+	}
+
 	// 파괴된 뒤 RespawnDelay초 뒤에 같은 종류의 아이템을 다시 스폰
 	GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ACXItemSpawner::SpawnItem, RespawnDelay, false);
 }
