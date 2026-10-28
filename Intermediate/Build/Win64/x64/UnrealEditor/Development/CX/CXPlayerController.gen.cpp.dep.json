@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealengine\\cx\\intermediate\\build\\win64\\unrealeditor\\inc\\cx\\uht\\cxplayercontroller.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealengine\\cx\\intermediate\\build\\win64\\x64\\cxeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealengine\\cx\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\cx\\definitions.cx.h",
+            "d:\\unrealengine\\cx\\source\\cx\\cxplayercontroller.h",
+            "d:\\unrealengine\\cx\\intermediate\\build\\win64\\unrealeditor\\inc\\cx\\uht\\cxplayercontroller.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
